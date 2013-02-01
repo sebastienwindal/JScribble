@@ -13,7 +13,15 @@ var canvas, stage;
   var oldPts;
   var oldMidPts;
 
+
+
+
   function init() {
+    
+    $("#clearButton").click(function() {
+      socket.emit('draw', $.toJSON({action: 'clear', user: clientName }));
+    });
+
     clientName = "Client" + Math.random();
     drawingCanvases = {};
     oldPts = {};
