@@ -19,6 +19,9 @@ var canvas, stage;
   function init() {
     
     $("#clearButton").click(function() {
+      // clear ourselves:
+      stage.clear();
+      // clear everyone else
       socket.emit('draw', $.toJSON({action: 'clear', user: clientName }));
     });
 
