@@ -36,23 +36,9 @@ var canvas, stage;
     drawingCanvases[clientName] = canvas;
 
     index = 0;
-    colors = ["#EFDECD",
-"#CD9575",
-"#FDD9B5",
-"#78DBE2",
-"#87A96B",
-"#FFA474",
-"#FAE7B5",
-"#9F8170",
-"#FD7C6E",
-"#000000",
-"#ACE5EE",
-"#1F75FE",
-"#A2A2D0",
-"#6699CC",
-"#0D98BA",
-"#7366BD",
-"#DE5D83",
+    colors = ["#EFDECD","#CD9575","#FDD9B5","#78DBE2","#87A96B","#FFA474","#FAE7B5","#9F8170",
+              "#FD7C6E","#000000","#ACE5EE","#1F75FE","#A2A2D0","#6699CC","#0D98BA","#7366BD",
+              "#DE5D83",
 "#CB4154",
 "#B4674D",
 "#FF7F49",
@@ -288,6 +274,9 @@ var canvas, stage;
         break;
         case 'draw':
         onDrawSegmentReceived(message.start.x, message.start.y, message.end.x, message.end.y, message.color, message.stroke, message.user);
+        break;
+        case 'clear':
+          alert('clear rcvd');
         break;
       }
     });
