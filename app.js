@@ -41,10 +41,26 @@ app.get('/', routes.index);
 
 var status = "All is well.";
 
-io.sockets.on('connection', function (socket) {
-  io.sockets.emit('status', { status: status }); // note the use of io.sockets to emit but socket.on to listen
-  socket.on('reset', function (data) {
-    status = "War is imminent!";
-    io.sockets.emit('status', { status: status });
+io.sockets.on('connection', function (socket) { // handler for incoming connections
+    
+    socket.on('chat', function (data) {
+      var msg = JSON.parse(data);
+      var reply = JSON.stringify({action: 'message', user: msg.user, msg: msg.msg });
+      socket.emit('chat', reply);
+      socket.broadcast.emit('chat', reply);
+    });
+    
+    socket.on('draw', function (data) {
+      var msg = JSON.parse(data);
+      var reply = JSON.stringify({action: msg.action, user: msg.user, msg: msg.msg, start: msg.start, end: msg.end, color: msg.color, stroke: msg.stroke });
+      socket.emit('draw', reply);
+      socket.broadcast.emit('draw', reply);
+    });
+
+    socket.on('join', function(data) {
+      var msg = JSON.parse(data);
+      var reply = JSON.stringify({action: 'control', user: msg.user, msg: ' joined the channel' });
+      socket.emit('chat', reply);
+      socket.broadcast.emit('chat', reply);
+    });
   });
-});
