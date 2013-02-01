@@ -1,12 +1,13 @@
 {
-  "name": "node-example",
-  "version": "0.0.1",
-  "dependencies": {
-    "express": "2.5.x",
-    "socket.io": "0.9.x"
+    "name": "jscribble",
+    "version": "0.0.1",
+    "private": false,
+    "dependencies": {
+      "express": "~2.5.8",
+      "ejs": "~0.7.1",
+      "socket.io": "~0.9.6"
   },
   "engines": {
-    "node": "0.8.x",
-    "npm": "1.1.x"
+    "node": "0.6.x"
   }
 }

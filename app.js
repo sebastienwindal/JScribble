@@ -1,42 +1,50 @@
-var app = require('http').createServer(handler),
-	io = require('socket.io').listen(app),
-	fs = require('fs');
-	
-	//app.listen(80); //, "192.168.178.34");
-	
-	function handler(req, res) { // just return index.html
-		fs.readFile(__dirname + '/index.html',
-			function (err, data) {
-				if (err) {
-					res.writeHead(500);
-					return res.end('Error loading index.html');
-				}
-				
-				res.writeHead(200);
-				res.end(data);
-			});
-	}
+var express = require('express'),
+    app = express.createServer(express.logger()),
+    io = require('socket.io').listen(app),
+    routes = require('./routes');
 
-	io.sockets.on('connection', function (socket) { // handler for incoming connections
-		
-		socket.on('chat', function (data) {
-			var msg = JSON.parse(data);
-			var reply = JSON.stringify({action: 'message', user: msg.user, msg: msg.msg });
-			socket.emit('chat', reply);
-			socket.broadcast.emit('chat', reply);
-		});
-		
-		socket.on('draw', function (data) {
-			var msg = JSON.parse(data);
-			var reply = JSON.stringify({action: msg.action, user: msg.user, msg: msg.msg, start: msg.start, end: msg.end, color: msg.color, stroke: msg.stroke });
-			socket.emit('draw', reply);
-			socket.broadcast.emit('draw', reply);
-		});
+// Configuration
 
-		socket.on('join', function(data) {
-			var msg = JSON.parse(data);
-			var reply = JSON.stringify({action: 'control', user: msg.user, msg: ' joined the channel' });
-			socket.emit('chat', reply);
-			socket.broadcast.emit('chat', reply);
-		});
-	});
+app.configure(function() {
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'ejs');
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(app.router);
+  app.use(express.static(__dirname + '/public'));
+});
+
+app.configure('development', function() {
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+});
+
+app.configure('production', function() {
+  app.use(express.errorHandler());
+});
+
+// Heroku won't actually allow us to use WebSockets
+// so we have to setup polling instead.
+// https://devcenter.heroku.com/articles/using-socket-io-with-node-js-on-heroku
+io.configure(function () {
+  io.set("transports", ["xhr-polling"]);
+  io.set("polling duration", 10);
+});
+
+// Routes
+
+var port = process.env.PORT || 5000; // Use the port that Heroku provides or default to 5000
+app.listen(port, function() {
+  console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+});
+
+app.get('/', routes.index);
+
+var status = "All is well.";
+
+io.sockets.on('connection', function (socket) {
+  io.sockets.emit('status', { status: status }); // note the use of io.sockets to emit but socket.on to listen
+  socket.on('reset', function (data) {
+    status = "War is imminent!";
+    io.sockets.emit('status', { status: status });
+  });
+});
