@@ -276,7 +276,7 @@ var canvas, stage;
         onDrawSegmentReceived(message.start.x, message.start.y, message.end.x, message.end.y, message.color, message.stroke, message.user);
         break;
         case 'clear':
-          alert('clear rcvd');
+          drawingCanvases[message.user].graphics.clear();
         break;
       }
     });
