@@ -53,7 +53,7 @@ io.sockets.on('connection', function (socket) { // handler for incoming connecti
     socket.on('draw', function (data) {
       var msg = JSON.parse(data);
       var reply = JSON.stringify({action: msg.action, user: msg.user, msg: msg.msg, start: msg.start, end: msg.end, color: msg.color, stroke: msg.stroke });
-      socket.emit('draw', reply);
+      //socket.emit('draw', reply);
       socket.broadcast.emit('draw', reply);
     });
 
