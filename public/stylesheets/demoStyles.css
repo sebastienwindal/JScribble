@@ -14,7 +14,11 @@ BODY {}
 
 #lineSettingsDiv {
 	float: right;
-	margin-top: -40px;
+	position:		absolute;
+	top:			0%;
+	left:			100%;
+	margin-left:	-260px;
+	margin-top: 20px;
 	height: 100px;
 	background-color: black;
 	padding: 15px;
