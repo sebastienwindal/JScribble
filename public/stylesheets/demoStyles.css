@@ -12,7 +12,23 @@ BODY, HTML {
 
 BODY {}
 
+#lineSettingsDiv {
+	float: right;
+	margin-top: -40px;
+	height: 100px;
+	background-color: black;
+	padding: 15px;
+}
 
+#lineSettingsDiv span {
+	margin: 10px;
+}
+#lineSettingsDiv #slider  {
+	margin: 10px;
+}
+#clearButton {
+	margin:15px;
+}
 p {
 	margin:	10px 0;
 }

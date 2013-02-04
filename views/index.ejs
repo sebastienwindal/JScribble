@@ -5,8 +5,15 @@ $(document).ready(init)
   <header id="header" class="EaselJS">
     <h1><span class="text-product">JScribble!</span></h1>
     <p>EaselJS for drawing, socki.io and node.js for backend pub sub.</p>
-    <button id="clearButton">Clear Everybody</button>
-    <input type='text' id="full"/>
+    <div id="lineSettingsDiv"> 
+	    <button id="clearButton">Clear Everybody</button>
+	    <input type='text' id="full"/>
+	    <div>
+	  		<label for="lineThickness">line thickness:</label>
+	  		<input type="text" id="lineThickness" />
+		</div>
+	    <div id="slider"></div>
+    </div>
   </header>
 
   <canvas id="myCanvas" width="1200" height="1000"></canvas>

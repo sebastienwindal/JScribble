@@ -4,7 +4,7 @@ var canvas, stage;
   var oldMidPt;
   var title;
   var color;
-  var stroke;
+  var stroke = 5;
   var colors = ["#EFDECD","#CD9575","#FDD9B5","#78DBE2","#87A96B","#FFA474","#FAE7B5","#9F8170",
               "#FD7C6E","#000000","#ACE5EE","#1F75FE","#A2A2D0","#6699CC","#0D98BA","#7366BD",
               "#DE5D83","#CB4154","#B4674D","#FF7F49","#EA7E5D","#B0B7C6","#FFFF99","#1CD3A2",
@@ -30,6 +30,20 @@ var canvas, stage;
   var oldPts;
   var oldMidPts;
 
+$(function() {
+    $( "#lineThickness" ).val( stroke + "pt");
+
+    $( "#slider" ).slider({
+      value:stroke,
+      min: 1,
+      max: 50,
+      step: 1,
+      slide: function( event, ui ) {
+        stroke = ui.value;
+        $( "#lineThickness" ).val( stroke + "pt");
+      }
+    });
+  });
 
   function initColorPicker() {
 
@@ -141,7 +155,7 @@ var canvas, stage;
 
     //penColor = colors[index];
     //alert(penColor);
-    stroke = Math.random()*10 + 5 | 0;
+    //stroke = Math.random()*10 + 5 | 0;
     oldPt = new createjs.Point(stage.mouseX, stage.mouseY);
     oldMidPt = oldPt;
     stage.addEventListener("stagemousemove" , handleMouseMove);
