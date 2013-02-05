@@ -45,7 +45,7 @@ io.sockets.on('connection', function (socket) { // handler for incoming connecti
     
     socket.on('chat', function (data) {
       var msg = JSON.parse(data);
-      var reply = JSON.stringify({action: 'message', user: msg.user, msg: msg.msg });
+      var reply = JSON.stringify({action: msg.action, user: msg.user, msg: msg.msg });
       socket.emit('chat', reply);
       socket.broadcast.emit('chat', reply);
     });

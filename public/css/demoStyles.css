@@ -12,6 +12,20 @@ BODY, HTML {
 
 BODY {}
 
+.chatMessageDiv {
+	margin:10px;
+}
+.chatMessageDiv-true {
+	text-align: right;
+}
+.chatMessageDiv-false {
+	
+}
+
+.chatImage {
+	width:48px;
+	height:48px;
+}
 #lineSettingsDiv {
 	float: right;
 	position:		absolute;

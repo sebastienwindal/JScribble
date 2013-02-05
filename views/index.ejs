@@ -2,19 +2,60 @@
 $(document).ready(init)
 </script>
 
-  <header id="header" class="EaselJS">
-    <h1><span class="text-product">JScribble!</span></h1>
-    <p>EaselJS for drawing, socki.io and node.js for backend pub sub.</p>
-    <div id="lineSettingsDiv"> 
-	    <button id="clearButton">Clear Everybody</button>
-	    <input type='text' id="full"/>
-	    <div>
-	  		<label for="lineThickness">line thickness:</label>
-	  		<input type="text" id="lineThickness" />
+<div class="container-fluid">
+
+	<div class="page-header">
+		<h1>JScribble!</h1>
+		<p>EaselJS for drawing, socki.io and node.js for backend pub sub.</p>
+	</div>
+
+	<div class="row-fluid">
+
+		<div class="span9">
+				<!--Body content-->
+				 <canvas id="myCanvas" width="600" height="1000"></canvas>
 		</div>
-	    <div id="slider"></div>
-    </div>
-  </header>
 
-  <canvas id="myCanvas" width="1200" height="1000"></canvas>
+		<div class="span3">
+			<div>
+				<form>
+  					<fieldset>
+  						<h3>settings</h3>
+						<label for="full">line color:</label>						
+						<input type='text' id="full"/>
 
+			  			<label for="lineThickness">line thickness:</label>
+			  			<input type="text" id="lineThickness" />
+
+			  			<div id="slider"></div>
+
+			  			<button id="clearButton" class="btn btn-primary">Clear Everybody</button>
+					</fieldset>
+				</form>
+			</div>
+
+			<div ng-controller="ChatController">
+				<h3>Chat</h3>				
+				<ul id="chatList" class="unstyled">
+        			<li ng-repeat="mess in messages">
+        				<div class="chatMessageDiv chatMessageDiv-{{mess.isMe}}">
+        				<img ng-src="/img/{{mess.image}}" class="chatImage"/>
+          				<span class="chatMessage">{{mess.message}}</span>
+          				<br/>
+          				<span class="chatUser label">{{mess.user}}</span>
+          				</div>
+        			</li>
+      			</ul>
+				<form >
+					<input type="text" id="chatTextBox" ng-model="chatMessageToSend" ng-model-instant />
+					<button id="clearButton" 
+							class="btn btn-success"
+							ng-click="sendChatMessage()">Send!</button>
+				</form>
+			</div>
+
+		</div>
+
+	</div>
+
+</div>

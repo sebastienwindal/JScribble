@@ -1,0 +1,19 @@
+#!/bin/bash
+# Downsamples all retina ...@2x.png images.
+
+echo "Downsampling retina images..."
+
+dir=$(pwd)
+find "$dir" -name "*.tif" | while read image; do
+
+    outfile=$(dirname "$image")/$(basename "$image" @2x.png).jpg
+
+    if [ "$image" -nt "$outfile" ]; then
+        basename "$outfile"
+
+        
+        sips -s format jpeg "$image" --out "$outfile"
+
+        test "$outfile" -nt "$image" || exit 1
+    fi
+done
