@@ -12,6 +12,10 @@ BODY, HTML {
 
 BODY {}
 
+#myCanvas {
+	background-color: #333;
+}
+
 .chatMessageDiv {
 	margin:10px;
 }
