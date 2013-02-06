@@ -71,7 +71,7 @@ var images = [ "8ball.tif.jpg",
 var index = (Math.round(Math.random()*10000000)) % colors.length;
 var penColor = colors[index];
 var socket; 
-var clientName;
+var clientName = "Client" + Math.round(10000 * Math.random());;
 var drawingCanvases;
 var oldPts;
 var oldMidPts;
@@ -137,7 +137,6 @@ function init()
     socket.emit('draw', $.toJSON({action: 'clear', user: clientName }));
     });
 
-    clientName = "Client" + Math.round(10000 * Math.random());
     drawingCanvases = {};
     oldPts = {};
     oldMidPts = {};
@@ -347,5 +346,23 @@ function ChatController($scope)
 
         var elem = document.getElementById('chatList');
         elem.scrollTop = elem.scrollHeight;
+    }
+}
+
+
+function IdentifierController($scope) {
+
+    $scope.identifier = "";
+    $scope.defaultIdentifier = clientName;
+    $scope.modalStyle = "";
+    $scope.useIdenfitierAction = function() {
+        $scope.identifier;
+        $scope.modalStyle = "fade";
+        clientName = $scope.identifier;
+    }
+
+    $scope.useDefaultIdentifierAction = function() {
+        // do nothing...
+        $scope.modalStyle = "fade";
     }
 }

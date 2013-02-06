@@ -9,8 +9,24 @@ $(document).ready(init)
 		<p>EaselJS for drawing, socki.io and node.js for backend pub sub.</p>
 	</div>
 
+	<div ng-controller="IdentifierController" class="modal {{modalStyle}}" >
+	  	
+	  	<div class="modal-body" >
+		    <p>Identify yourself!</p>
+		    	<form >
+					<input type="text" id="chatTextBox" ng-model="identifier" ng-model-instant placeholder="your name" />
+					<button id="clearButton" 
+							type="button" class="btn btn-primary"
+							ng-click="useIdenfitierAction()">OK</button>
+				</form>
+			<p type="button" class="btn btn-link" ng-click="useDefaultIdentifierAction()">Or continue as {{defaultIdentifier}}</p>
+	  	</div>
+
+	</div>
+
 	<div class="row-fluid">
 
+	
 		<div class="span9">
 				<!--Body content-->
 				 <canvas id="myCanvas" width="600" height="1000"></canvas>
