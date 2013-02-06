@@ -336,7 +336,7 @@ function ChatController($scope)
     {
         sendMessage($scope.chatMessageToSend, this);
     }
-    
+
     $scope.messages = [];
 
     $scope.addMessage = function(message, user)
@@ -344,5 +344,8 @@ function ChatController($scope)
         $scope.messages.push({message:message, user:user, isMe:(user == clientName), image:iconForUser(user)});
         $scope.chatMessageToSend = "";
         $scope.$apply();
+
+        var elem = document.getElementById('chatList');
+        elem.scrollTop = elem.scrollHeight;
     }
 }

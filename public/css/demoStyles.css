@@ -26,6 +26,12 @@ BODY {}
 	width:48px;
 	height:48px;
 }
+
+#chatList {
+	height:300px; 
+	overflow: auto;
+}
+
 #lineSettingsDiv {
 	float: right;
 	position:		absolute;
