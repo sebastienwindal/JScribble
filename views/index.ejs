@@ -12,12 +12,12 @@ $(document).ready(init)
 	<div ng-controller="IdentifierController" class="modal {{modalStyle}}" >
 	  	
 	  	<div class="modal-body" >
-		    <p>Identify yourself!</p>
-		    	<form >
-					<input type="text" id="chatTextBox" ng-model="identifier" ng-model-instant placeholder="your name" />
+		    <h3>Identify yourself!</h3>
+		    	<form class="form-inline">
+					<input type="text" class="input-medium" id="chatTextBox" ng-model="identifier" ng-model-instant placeholder="your name" />
 					<button id="clearButton" 
-							type="button" class="btn btn-primary"
-							ng-click="useIdenfitierAction()">OK</button>
+							class="btn btn-primary"
+							ng-click="useIdenfitierAction()">Join</button>
 				</form>
 			<p type="button" class="btn btn-link" ng-click="useDefaultIdentifierAction()">Or continue as {{defaultIdentifier}}</p>
 	  	</div>
@@ -45,7 +45,7 @@ $(document).ready(init)
 
 			  			<div id="slider"></div>
 
-			  			<button id="clearButton" class="btn btn-primary">Clear Everybody</button>
+			  			<button id="clearButton"  class="btn btn-primary">Clear Everybody</button>
 					</fieldset>
 				</form>
 			</div>
@@ -62,7 +62,7 @@ $(document).ready(init)
           				</div>
         			</li>
       			</ul>
-				<form >
+				<form class="form-inline">
 					<input type="text" id="chatTextBox" ng-model="chatMessageToSend" ng-model-instant />
 					<button id="clearButton" 
 							class="btn btn-success"
