@@ -319,7 +319,7 @@ function iconForUser(username) {
 
 function ChatController($scope) {
 
-    globalCallbackController = this;
+    globalCallbackController = $scope;
 
     $scope.sendChatMessage = function() {
         sendMessage($scope.chatMessageToSend, this);
