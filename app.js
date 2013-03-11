@@ -45,20 +45,20 @@ io.sockets.on('connection', function (socket) { // handler for incoming connecti
     
     socket.on('chat', function (data) {
       var msg = JSON.parse(data);
-      var reply = JSON.stringify({action: msg.action, user: msg.user, msg: msg.msg });
+      var reply = JSON.stringify({action: msg.action, userId: msg.userId, msg: msg.msg });
       socket.emit('chat', reply);
       socket.broadcast.emit('chat', reply);
     });
     
     socket.on('draw', function (data) {
       var msg = JSON.parse(data);
-      var reply = JSON.stringify({action: msg.action, user: msg.user, msg: msg.msg, start: msg.start, end: msg.end, color: msg.color, stroke: msg.stroke });
+      var reply = JSON.stringify({action: msg.action, userId: msg.userId, start: msg.start, end: msg.end, color: msg.color, stroke: msg.stroke });
       socket.broadcast.emit('draw', reply);
     });
 
     socket.on('join', function(data) {
       var msg = JSON.parse(data);
-      var reply = JSON.stringify({action: 'control', user: msg.user, msg: ' joined the channel' });
+      var reply = JSON.stringify({action: 'control', userId: msg.userId, userName: msg.userName, msg: ' joined the channel' });
       socket.emit('chat', reply);
       socket.broadcast.emit('chat', reply);
     });

@@ -1,77 +1,62 @@
-<script>
-$(document).ready(init)
-</script>
+    <!-- Navbar
+    ================================================== -->
 
-<div class="container-fluid">
+<style type="text/css" media="screen">
 
-	<div class="page-header">
-		<h1>JScribble!</h1>
-		<p>EaselJS for drawing, socki.io and node.js for backend pub sub.</p>
-	</div>
-
-	<div ng-controller="IdentifierController" class="modal {{modalStyle}}" >
-	  	
-	  	<div class="modal-body" >
-		    <h3>Identify yourself!</h3>
-		    	<form class="form-inline">
-					<input type="text" class="input-medium" id="chatTextBox" ng-model="identifier" ng-model-instant placeholder="your name" />
-					<button id="clearButton" 
-							class="btn btn-primary"
-							ng-click="useIdenfitierAction()">Join</button>
-				</form>
-			<p type="button" class="btn btn-link" ng-click="useDefaultIdentifierAction()">Or continue as {{defaultIdentifier}}</p>
-	  	</div>
-
-	</div>
-
-	<div class="row-fluid">
-
+#mainContainer {
 	
-		<div class="span9">
-				<!--Body content-->
-				 <canvas id="myCanvas" width="600" height="600"></canvas>
-		</div>
+}
+#drawContainer {
+	background-color: red;
+	height: inherit;
+}
+#chatContainer {
+	height: inherit;
+}
+#chatContainer, #drawContainer {
+	heigt: inherit;
+	padding-top: 41px;
+	padding-bottom: 41px;
+}
+body {
+	height: 100%;
+	width: 100%;
+    position: absolute;
+}
 
-		<div class="span3">
-			<div>
-				<form>
-  					<fieldset>
-  						<h3>settings</h3>
-						<label for="full">line color:</label>						
-						<input type='text' id="full"/>
+.container-fluid,
+.row-fluid { height: inherit; }
 
-			  			<label for="lineThickness">line thickness:</label>
-			  			<input type="text" id="lineThickness" />
+</style>
 
-			  			<div id="slider"></div>
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <a class="brand" href="#">JScribble</a>
+    <ul class="nav">
+    	<li class="divider-vertical"></li>
+      <li class=""><a href="#">Interactive collaboration board experiment</a></li>
+    </ul>
+  </div>
+</div>
 
-			  			<button id="clearButton"  class="btn btn-primary">Clear Everybody</button>
-					</fieldset>
-				</form>
-			</div>
+<div class="container-fluid" id="mainContainer">
+  	<div class="row-fluid">
+	  	<div class="span8" id="drawContainer"><p>1<br/>2<br/>3</p></div>
+  		<div class="span4" id="chatContainer">
 
-			<div ng-controller="ChatController" >
-				<h3>Chat</h3>				
-				<ul id="chatList" class="unstyled">
-        			<li ng-repeat="mess in messages">
-        				<div class="chatMessageDiv chatMessageDiv-{{mess.isMe}}">
-        				<img ng-src="/img/{{mess.image}}" class="chatImage"/>
-          				<span class="chatMessage">{{mess.message}}</span>
-          				<br/>
-          				<span class="chatUser label">{{mess.user}}</span>
-          				</div>
-        			</li>
-      			</ul>
-				<form class="form-inline">
-					<input type="text" id="chatTextBox" ng-model="chatMessageToSend" ng-model-instant />
-					<button id="clearButton" 
-							class="btn btn-success"
-							ng-click="sendChatMessage()">Send!</button>
-				</form>
-			</div>
+  		<div ng-include src="'/chat.html'" ng-controller="ChatCtrl"/>
 
-		</div>
+  		</div>
+	</div>
+</div>
+   
+<div class="navbar navbar-inverse navbar-fixed-bottom">
+	<div class="navbar-inner">
+		<ul class="nav">
+			<li>
+				<a href='#About'>About JScribble</a>
+			</li>
+		</ul>
 
 	</div>
-
 </div>

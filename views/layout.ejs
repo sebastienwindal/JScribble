@@ -12,16 +12,11 @@
     <![endif]-->
 
     <!-- styles -->
-    <link href="/css/demoStyles.css" rel="stylesheet">
     <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/spectrum.css" rel="stylesheet">
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
 
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-    <script src='http://jquery-json.googlecode.com/files/jquery.json-2.2.min.js'></script>
-    <script src='http://datejs.googlecode.com/svn/trunk/build/date.js'></script>
+    <script src="/js/jquery.json-2.4.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
-
 
     <script type="text/javascript" src="/js/UID.js"></script>
     <script type="text/javascript" src="/js/Matrix2D.js"></script>
@@ -39,12 +34,14 @@
     <script type="text/javascript" src="/js/socket.io.js"></script>
     <script type="text/javascript" src="/js/spectrum.js"></script>
     
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
-
-    <script type="text/javascript" src="/js/Draw.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
+    <script type="text/javascript" src="/js/JScribbleApp.js"></script>
+    <script type="text/javascript" src="/js/JScribbleService.js"></script>
+    <script type="text/javascript" src="/js/MainCtrl.js"></script>
+    <script type="text/javascript" src="/js/ChatCtrl.js"></script>
 
   </head>
-  <body>
+  <body ng:app="JScribbleApp" ng-controller="MainCtrl">
 
     <%- body %>
 

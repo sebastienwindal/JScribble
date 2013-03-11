@@ -1,0 +1,82 @@
+
+<style type="text/css" media="screen">
+	* {
+		-webkit-box-sizing: border-box;
+	}
+	html, body {
+		height: 100%;
+		width: 100%;
+	}
+	#chatForm textarea, #chatForm input {
+		width: 100%;
+		margin: 0px 0px 10px 0px;
+		height: 100px;
+	}
+	#chatForm button {
+		width: 100%;
+		margin: 10px 0px 10px 0px;
+	}
+	#chatForm {
+		padding: 25px 25px 25px 25px;
+		background-color: rgba(30,30,30,0.8);
+		border: 1px solid black;
+		border-radius: 0px 0px 5px 5px;
+		height: 200px;
+		margin-top: 0px;
+		margin-bottom: 0px;
+	}
+	#chatList {
+		margin: 10px 0px 0px 0px;
+		list-style: none;
+		width: 100%;
+		overflow: scroll;
+		background-color: #f0f0f0;
+		border-right: 1px solid #aaa;
+		border-left: 1px solid #aaa;
+		border-top: 1px solid #aaa;
+		border-radius: 5px 5px 0px 0px;
+	}
+	#chatList li {
+		padding: 15px;
+		margin: 15px 25px 15px 25px;
+		border: 1px solid #aaa;
+		background-color: #fff;
+		border-radius: 3px;
+	}
+
+</style>
+
+<ul id="chatList" auto-scroll-down>
+	<li ng-repeat="message in scribble.messages">{{message}}</li>
+</ul>
+
+
+
+<form id="chatForm" 
+  			ng-submit="sendChatMessage()">
+	
+  	<textarea 	id="chatTextArea"
+  				ng-model="$parent.currentMessage" 
+  				send-message-on-enter></textarea>
+
+  	<button type="submit"
+  			id="chatButton"
+  			class="btn btn-primary">Post</button>
+</form>
+
+
+<script>
+
+function adjustSize() {
+	$('#chatList').height($('body').height() - 2 * 40 -5/* top and bottom bar */ - 200 /* the form height*/ -15 /* form margin */);
+}
+
+$(function docReady() {
+	adjustSize();
+});
+
+$(window).resize(function() {
+	adjustSize();
+});
+
+</script>
