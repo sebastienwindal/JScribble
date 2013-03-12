@@ -2,12 +2,18 @@ function ChatCtrl($scope, JScribbleService) {
 	
 	$scope.currentMessage = '';
 	$scope.scribble = JScribbleService;
+	$scope.userName = $scope.scribble.userName;
 
 	$scope.sendChatMessage = function() {
 		JScribbleService.sendChatMessage($scope.currentMessage);
 		$scope.currentMessage = '';
 	}
+
+	$scope.$watch(JScribbleService.userName, function() {
+		$scope.userName = JScribbleService.userName;
+	})
 }
+
 
 app.directive('sendMessageOnEnter', function() {
 
@@ -31,6 +37,7 @@ app.directive('sendMessageOnEnter', function() {
 	return myDirective;
 });
 
+
 app.directive('autoScrollDown', function() {
 	var mydirective = {
 		restrict: 'A',
@@ -46,7 +53,21 @@ app.directive('autoScrollDown', function() {
 
 			scope.scrollDown(element);
 
-			element.bind('DOMNodeInserted', scope.scrollDown);
+			element.bind('DOMSubtreeModified', scope.scrollDown);
+		}
+	}
+	return mydirective;
+});
+
+
+app.directive('smartDate', function() {
+
+	var myDirective = {
+		restrict: 'E',
+		template: '<div>{{d}}',
+		replace: 'true',
+		link: function(scope, element, attrs) {
+
 		}
 	}
 	return mydirective;

@@ -28,13 +28,25 @@ body {
 .row-fluid { height: inherit; }
 
 </style>
+<div class="modal" ng-class="{true:'show', false:'hide'}[shouldShowNameModal]">
+    <div class="modal-header">
+        <h4>Please identify yourself!</h4>
+    </div>
+    <div class="modal-body">
+    	<input class="input-xlarge"  placeholder="your name here" ng-model="userName"/>
+    	<button class="btn btn-primary" ng-click="closeNameModal()">Join!</button>
+    </div>
+</div>
 
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="navbar-inner">
     <a class="brand" href="#">JScribble</a>
     <ul class="nav">
     	<li class="divider-vertical"></li>
-      <li class=""><a href="#">Interactive collaboration board experiment</a></li>
+        <li class=""><a href="#">Interactive collaboration board experiment</a></li>
+    </ul>
+    <ul class="nav pull-right">
+    	<li class="btn btn-primary" ng-hide="shouldShowNameModal" ng-click="logout()">logout</li>
     </ul>
   </div>
 </div>
@@ -60,3 +72,4 @@ body {
 
 	</div>
 </div>
+

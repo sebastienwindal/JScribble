@@ -38,23 +38,38 @@
 	}
 	#chatList li {
 		padding: 15px;
-		margin: 15px 25px 15px 25px;
-		border: 1px solid #aaa;
+		margin: 0px;
+		border-bottom: 1px solid #aaa;
 		background-color: #fff;
-		border-radius: 3px;
 	}
-
+	#chatList li:nth-of-type(even) {
+		background-color: #f9f9f9;
+	}
+	.chatMessageContainer {
+		margin: 10px 0px 10px 0px;
+		padding-bottom: 1px;
+	}
+	.chatMessageContainer .timestamp {
+		float: right;
+		margin: 0px;
+		font-size: 10px;
+		color: #888;
+	}
 </style>
 
 <ul id="chatList" auto-scroll-down>
-	<li ng-repeat="message in scribble.messages">{{message}}</li>
+	<li ng-repeat="message in scribble.messages">
+		<div class="chatMessageCocover yourntainer">
+			<p>{{message.msg}}</p>
+			<div class="timestamp">{{message.time | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+		<div>
+	</li>
 </ul>
-
 
 
 <form id="chatForm" 
   			ng-submit="sendChatMessage()">
-	
+	<label>{{scribble.userName}}</label>
   	<textarea 	id="chatTextArea"
   				ng-model="$parent.currentMessage" 
   				send-message-on-enter></textarea>
@@ -68,7 +83,7 @@
 <script>
 
 function adjustSize() {
-	$('#chatList').height($('body').height() - 2 * 40 -5/* top and bottom bar */ - 200 /* the form height*/ -15 /* form margin */);
+	$('#chatList').height($('body').height() - 2 * 40 -5/* top and bottom bar */ - 200 /* the form height*/ -10 /* form margin */);
 }
 
 $(function docReady() {

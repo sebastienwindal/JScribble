@@ -17,6 +17,13 @@ app.factory('JScribbleService', function($rootScope) {
 
 	  	},
 
+      logout: function() {
+        this.userName = null;
+        this.userId = null;
+        this.messages = [];
+        this.socket.disconnect();
+      },
+
 	    sendChatMessage: function(message) {
 
 	    	var msg = $.toJSON({   	action: 'message', 
@@ -34,7 +41,7 @@ app.factory('JScribbleService', function($rootScope) {
         	var action = message.action;
         	switch (action) {
             	case 'message':
-                	this.userData.messages.push(message.msg);
+                	this.userData.messages.push(message);
                 	$rootScope.$apply();
             	break;
             

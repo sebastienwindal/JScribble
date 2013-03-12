@@ -1,1 +1,1 @@
-var app = angular.module('JScribbleApp', []); 
+var app = angular.module('JScribbleApp', ['ngCookies']); 
