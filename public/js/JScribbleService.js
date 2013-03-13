@@ -55,20 +55,33 @@ app.factory('JScribbleService', function($rootScope) {
 
 	  	init: function(host, userName, avatar) {
 
-	  		this.socket = io.connect('http://' + host);
-	  		this.socket.userData = this;
-	  		this.userName = userName;
+        if (this.socket) {
+          if (this.socket.socket.connected === false &&
+              this.socket.socket.connecting === false) {
+                this.socket.socket.connect();
+          }
+          this.socket.emit('chatListPlease');
+        } else {
+	  		  this.socket = io.connect('http://' + host);
+          this.socket.userData = this;
+          this.socket.on('chat', this.chatCallback);
+          this.socket.emit('join', $.toJSON({ userName: this.userName, userId: this.userId, avatar: this.avatar }));
+        }
+        this.userName = userName;
         this.avatar = avatar;
-	  		this.userId = Math.floor((1 + Math.random()) * 0x10000).toString(16);
-	  		this.socket.emit('join', $.toJSON({ userName: this.userName, userId: this.userId, avatar: this.avatar }));
-	  		this.socket.on('chat', this.chatCallback, 'd');
+        this.userId = Math.floor((1 + Math.random()) * 0x10000).toString(16) + 
+                          Math.floor((1 + Math.random()) * 0x10000).toString(16);
+          
 	  	},
 
       logout: function() {
+        this.socket.emit('close', $.toJSON({ userName: this.userName, userId: this.userId}));
         this.userName = null;
         this.userId = null;
+        this.avatar = null;
         this.messages = [];
-        this.socket.disconnect();
+        this.socket.socket.disconnect();
+        //this.socket = null;
       },
 
 	    sendChatMessage: function(message) {
@@ -82,8 +95,11 @@ app.factory('JScribbleService', function($rootScope) {
     		this.socket.emit('chat', msg);
 	    },
 
-	    chatCallback: function (msg, d) {
+      setAvatar: function(av) {
+        this.avatar = av;
+      },
 
+	    chatCallback: function (msg, d) {
         	var message = $.evalJSON(msg);
 
         	var action = message.action;

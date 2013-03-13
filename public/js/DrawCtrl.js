@@ -1,0 +1,3 @@
+function DrawCtrl($scope, JScribbleService) {
+
+}

@@ -2,12 +2,13 @@ function MainCtrl($scope, JScribbleService, $cookies) {
 
 	$scope.cookies = $cookies;
 	$scope.userName = $cookies.userName;
-	$scope.avatar = JScribbleService.possibleAvatars[Math.floor((Math.random()*JScribbleService.possibleAvatars.length)+1)];
 	$scope.scribble = JScribbleService;
+	$scope.userAvatar = $cookies.avatar;
 
 	$scope.join = function() {
 		$scope.cookies.userName = $scope.userName;
-		JScribbleService.init(window.location.host, $scope.userName, $scope.avatar);
+		$scope.cookies.avatar = $scope.userAvatar;
+		JScribbleService.init(window.location.host, $scope.userName, $scope.userAvatar);
 		
 		// wait for CB from join...
 		$scope.shouldShowNameModal = false;
@@ -27,6 +28,12 @@ function MainCtrl($scope, JScribbleService, $cookies) {
 	$scope.logout = function() {
 		$scope.cookies.userName = '';
 		$scope.shouldShowNameModal = true;
+		$scope.userAvatar = JScribbleService.possibleAvatars[0];
 		JScribbleService.logout();
+	};
+
+	$scope.setAvatar = function(avatar) {
+
+		$scope.userAvatar = avatar;
 	}
 }

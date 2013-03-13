@@ -68,6 +68,11 @@
 		box-shadow: 2px 2px 3px rgba(20,20,20,0.3);
 		float: left;
 	}
+	.chatStatus {
+		margin-top: -15px;
+		color: white;
+		font-size: 12px;
+	}
 </style>
 
 <ul id="chatList" auto-scroll-down>
@@ -84,7 +89,8 @@
 
 <form id="chatForm" 
   			ng-submit="sendChatMessage()">
-	<label>{{scribble.userName}}</label>
+	<label class="chatStatus" ng-show="scribble.userName.length>0">logged in as {{scribble.userName}}</label>
+	<label class="chatStatus" ng-hide="scribble.userName.length>0">not logged in.</label>	
   	<textarea 	id="chatTextArea"
   				ng-model="$parent.currentMessage" 
   				send-message-on-enter></textarea>

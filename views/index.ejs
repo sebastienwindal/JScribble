@@ -7,7 +7,6 @@
 	
 }
 #drawContainer {
-	background-color: red;
 	height: inherit;
 }
 #chatContainer {
@@ -29,7 +28,7 @@ body {
 
 #avatarList {
   height: 280px;
-  margin: 10px 10px 10px 10px;
+  margin: 20px 10px 5px 10px;
 }
 #avatarList li {
   display: inline-block;
@@ -42,6 +41,12 @@ body {
   width: 48px;
   height: 48px;
 }
+#formAvatar {
+  width:32px;
+  height: 32px;
+  margin: 0px 15px 0px 30px;
+}
+
 </style>
 
 <div class="modal" ng-class="{true:'show', false:'hide'}[shouldShowNameModal]">
@@ -49,13 +54,15 @@ body {
         <h4>Please identify yourself!</h4>
     </div>
     <div class="modal-body">
+      <img id="formAvatar" ng-src="/img/{{userAvatar}}" />
     	<input class="input-xlarge"  placeholder="your name here" ng-model="userName"/>
     	<button class="btn btn-primary" ng-click="closeNameModal()">Join!</button>
 
-      <ul id="avatarList">
+      <ul id="avatarList" ng-cloak>
         <li ng-repeat="avatar in scribble.possibleAvatars"
-            class="selected">
-          <img src="/img/{{avatar}}" />
+            ng-class="{userAvatar:'selected'}[avatar]">
+          <img ng-src="/img/{{avatar}}" 
+              ng-click="setAvatar(avatar)" />
         </li>
       </ul>
     </div>
@@ -76,13 +83,16 @@ body {
 
 <div class="container-fluid" id="mainContainer">
   	<div class="row-fluid">
-	  	<div class="span8" id="drawContainer"><p>1<br/>2<br/>3</p></div>
-  		<div class="span4" id="chatContainer">
 
-  		<div ng-include src="'/chat.html'" ng-controller="ChatCtrl"/>
+	  	<div class="span8" id="drawContainer">
+        <div ng-include src="'/draw.html'" ng-controller="DrawCtrl"></div>
+      </div>
+  		
+      <div class="span4" id="chatContainer">
+  		  <div ng-include src="'/chat.html'" ng-controller="ChatCtrl"></div>
+      </div>
 
-  		</div>
-	</div>
+  	</div>	
 </div>
    
 <div class="navbar navbar-inverse navbar-fixed-bottom">

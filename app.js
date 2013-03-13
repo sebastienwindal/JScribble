@@ -79,6 +79,7 @@ io.sockets.on('connection', function (socket) { // handler for incoming connecti
     });
 
     socket.on('join', function(data) {
+
       var msg = JSON.parse(data);
       var reply = JSON.stringify( { action: 'control', 
                                     userId: msg.userId, 
@@ -87,6 +88,10 @@ io.sockets.on('connection', function (socket) { // handler for incoming connecti
                                     msg: 'joined the channel',
                                     messages: _.first(messages, 50) });
       socket.emit('chat', reply);
-      //socket.broadcast.emit('chat', reply);
+    });
+
+    socket.on('close', function(data) {
+      var msg= JSON.parse(data);
+      socket.disconnect();
     });
   });
