@@ -77,9 +77,9 @@
 
 <ul id="chatList" auto-scroll-down>
 	<li ng-repeat="message in scribble.messages">
-		<div class="chatMessageContainer">
+		<div class="chatMessageContainer" ng-cloak>
 			<div class="username">{{message.userName}}</div>
-			<img src="/img/{{message.avatar}}" class="avatar">
+			<img ng-src="/img/{{message.avatar}}" class="avatar">
 			<p>{{message.msg}}</p>
 			<div class="timestamp">{{message.time | date:'yyyy-MM-dd HH:mm:ss'}}</div>
 		<div>
@@ -97,6 +97,7 @@
 
   	<button type="submit"
   			id="chatButton"
+  			ng-disabled="$parent.currentMessage.length==0"
   			class="btn btn-primary">Post</button>
 </form>
 
@@ -104,7 +105,7 @@
 <script>
 
 function adjustSize() {
-	$('#chatList').height($('body').height() - 2 * 40 -5/* top and bottom bar */ - 200 /* the form height*/ -10 /* form margin */);
+	$('#chatList').height($('body').height() - 2 * 40 /* top and bottom bar */ - 200 /* the form height*/ -2*10 /* form margin */);
 }
 
 $(function docReady() {

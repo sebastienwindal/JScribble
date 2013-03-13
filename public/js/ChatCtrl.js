@@ -5,8 +5,10 @@ function ChatCtrl($scope, JScribbleService) {
 	$scope.userName = $scope.scribble.userName;
 
 	$scope.sendChatMessage = function() {
-		JScribbleService.sendChatMessage($scope.currentMessage);
-		$scope.currentMessage = '';
+		if ($scope.currentMessage && $scope.currentMessage.length > 0) {
+			JScribbleService.sendChatMessage($scope.currentMessage);
+			$scope.currentMessage = '';
+		}
 	}
 
 	$scope.$watch(JScribbleService.userName, function() {
