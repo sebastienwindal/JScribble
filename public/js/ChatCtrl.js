@@ -61,16 +61,3 @@ app.directive('autoScrollDown', function() {
 	return mydirective;
 });
 
-
-app.directive('smartDate', function() {
-
-	var myDirective = {
-		restrict: 'E',
-		template: '<div>{{d}}',
-		replace: 'true',
-		link: function(scope, element, attrs) {
-
-		}
-	}
-	return mydirective;
-});
