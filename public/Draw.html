@@ -1,1 +1,30 @@
-hello
+<style type="text/css" media="screen">
+
+#myCanvas {
+  background-color: #ddd;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+} 
+
+</style>
+
+<canvas id="myCanvas" width="300" height="300"></canvas>
+
+<script>
+
+function adjustCanvasSize() {
+  $('#myCanvas').height($('body').height() - 2 * 40 /* top and bottom bar */ - 20 /* top margins */);
+  $('#myCanvas').width($('#drawContainer').width());
+}
+
+$(function docReady() {
+  adjustCanvasSize();
+});
+
+$(window).resize(function() {
+  adjustCanvasSize();
+});
+
+</script>
