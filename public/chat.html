@@ -55,13 +55,28 @@
 		font-size: 10px;
 		color: #888;
 	}
+	.chatMessageContainer .username {
+		margin:-15px 0px 0px -5px;
+		font-weight: bold;
+		font-style: italic;
+		color: #002;
+	}
+	.chatMessageContainer .avatar {
+		width: 42px;
+		height: 42px;
+		margin: 8px 15px 10px -3px;
+		box-shadow: 2px 2px 3px rgba(20,20,20,0.3);
+		float: left;
+	}
 </style>
 
 <ul id="chatList" auto-scroll-down>
 	<li ng-repeat="message in scribble.messages">
-		<div class="chatMessageCocover yourntainer">
+		<div class="chatMessageContainer">
+			<div class="username">{{message.userName}}</div>
+			<img src="/img/{{message.avatar}}" class="avatar">
 			<p>{{message.msg}}</p>
-			<div class="timestamp">{{message.time | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+			<div class="timestamp">{{message.time | date:'yyyy-MM-dd HH:mm:ss'}}</div>
 		<div>
 	</li>
 </ul>

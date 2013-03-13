@@ -3,6 +3,8 @@ var express = require('express'),
     io = require('socket.io').listen(app),
     routes = require('./routes');
 
+var _ = require('underscore');
+
 // Configuration
 
 app.configure(function() {
@@ -41,25 +43,50 @@ app.get('/', routes.index);
 
 var status = "All is well.";
 
+var messages = [];
+
 io.sockets.on('connection', function (socket) { // handler for incoming connections
     
     socket.on('chat', function (data) {
       var msg = JSON.parse(data);
-      var reply = JSON.stringify({action: msg.action, userId: msg.userId, msg: msg.msg, time: new Date() });
+      msg.time = new Date();
+      var reply = JSON.stringify( { action: msg.action, 
+                                    userId: msg.userId, 
+                                    msg: msg.msg,
+                                    userName: msg.userName, 
+                                    time: msg.time,
+                                    avatar: msg.avatar
+                                  });
       socket.emit('chat', reply);
       socket.broadcast.emit('chat', reply);
+      messages.push(msg);
+      var now = new Date();
+      messages = _.reject(messages, function(m) {
+        return (now - m) > (30 * 1000); // 30 seconds
+      });
     });
     
     socket.on('draw', function (data) {
       var msg = JSON.parse(data);
-      var reply = JSON.stringify({action: msg.action, userId: msg.userId, start: msg.start, end: msg.end, color: msg.color, stroke: msg.stroke });
+      var reply = JSON.stringify( { action: msg.action,
+                                    userId: msg.userId,
+                                    start: msg.start,
+                                    end: msg.end,
+                                    color: msg.color,
+                                    stroke: msg.stroke 
+                                  });
       socket.broadcast.emit('draw', reply);
     });
 
     socket.on('join', function(data) {
       var msg = JSON.parse(data);
-      var reply = JSON.stringify({action: 'control', userId: msg.userId, userName: msg.userName, msg: ' joined the channel' });
+      var reply = JSON.stringify( { action: 'control', 
+                                    userId: msg.userId, 
+                                    avatar: msg.avatar,
+                                    userName: msg.userName,
+                                    msg: 'joined the channel',
+                                    messages: _.first(messages, 50) });
       socket.emit('chat', reply);
-      socket.broadcast.emit('chat', reply);
+      //socket.broadcast.emit('chat', reply);
     });
   });

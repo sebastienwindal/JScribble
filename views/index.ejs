@@ -27,7 +27,23 @@ body {
 .container-fluid,
 .row-fluid { height: inherit; }
 
+#avatarList {
+  height: 280px;
+  margin: 10px 10px 10px 10px;
+}
+#avatarList li {
+  display: inline-block;
+  padding: 2px;
+}
+#avatarList li.selected {
+  background-color: blue;
+}
+#avatarList img {
+  width: 48px;
+  height: 48px;
+}
 </style>
+
 <div class="modal" ng-class="{true:'show', false:'hide'}[shouldShowNameModal]">
     <div class="modal-header">
         <h4>Please identify yourself!</h4>
@@ -35,6 +51,13 @@ body {
     <div class="modal-body">
     	<input class="input-xlarge"  placeholder="your name here" ng-model="userName"/>
     	<button class="btn btn-primary" ng-click="closeNameModal()">Join!</button>
+
+      <ul id="avatarList">
+        <li ng-repeat="avatar in scribble.possibleAvatars"
+            class="selected">
+          <img src="/img/{{avatar}}" />
+        </li>
+      </ul>
     </div>
 </div>
 
