@@ -1,5 +1,7 @@
 function DrawCtrl($scope, JScribbleService) {
 
+	$scope.scribble = JScribbleService;
+
 	$scope.onDraw = function(start, end, color, stroke) {
 		
 		JScribbleService.addDrawSegment(start, end, color, stroke);
@@ -9,7 +11,30 @@ function DrawCtrl($scope, JScribbleService) {
 
 		JScribbleService.sendStartDraw(start, color, stroke);
 	}
+
+	$scope.changeColor = function(color) {
+		
+		$scope.selectedColor = color;
+		
+		for (c in $scope.scribble.possibleColors) {
+			if ($scope.scribble.possibleColors[c] != $scope.selectedColor) {
+				$scope.scribble.possibleColors[c].isSelected = false;
+			}
+		}
+
+	}
 }
+
+function IndividualColorCtrl($scope) {
+
+	$scope.isSelected = true;
+
+	$scope.changeColor = function(penColor) {
+		penColor.isSelected = true;
+		$scope.$parent.changeColor(penColor);
+	}
+}
+
 
 app.directive('drawingBoard', function() {
 	var mydirective = {

@@ -8,18 +8,63 @@
   border-radius: 5px;
 } 
 
+#drawingBoardOptions {
+	width: 100%;
+	background-color: rgba(0,0,0,0.8);
+	position: absolute;
+	top: 51px;
+	border-radius: 5px 5px 0px 0px;
+	border: 1px solid black;
+}
+#drawingBoardOptions ul {
+	display: inline-block;
+	list-style-type: none;
+	margin: 0px;
+	padding:2px 10px 2px 10px;
+}
+#drawingBoardOptions li {
+	display: inline-block;
+}
+.colorThumb {
+	width: 26px;
+	height: 26px;
+	margin: 4px 2px 0px 2px;
+}
+#drawingBoardOptions div.selected {
+	border: 1px solid white;
+}
+
 </style>
 
+
+
 <drawing-board 	stroke-size="5" 
+				pen-color="{{selectedColor.color}}"
 				on-draw="onDraw(start,end,color,stroke)" 
 				on-start-draw="onStartDraw(start,color,stroke)"
-				id="myCanvas" width="1000" height="1000"></drawing-board>
+				id="myCanvas" width="1000" height="1000">
+
+</drawing-board>
+
+<div id="drawingBoardOptions">
+	<ul>
+		<li ng-repeat="penColor in scribble.possibleColors" ng-controller="IndividualColorCtrl">
+			<div 	class="colorThumb"
+					ng-class="{true:'selected'}[penColor.isSelected]" 
+					style="background-color:{{penColor.color}}"
+					ng-click="changeColor(penColor)"
+
+					></div>
+		</li>
+	</ul>
+</div>
 
 <script>
 
 function adjustCanvasSize() {
   $('#myCanvas').height($('body').height() - 2 * 40 /* top and bottom bar */ - 20 /* top margins */);
   $('#myCanvas').width($('#drawContainer').width());
+  $('#drawingBoardOptions').width($('#drawContainer').width());
 }
 
 $(function docReady() {
