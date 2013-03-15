@@ -126,7 +126,6 @@ app.factory('JScribbleService', function($rootScope) {
           // ignore our own messages being retransmitted back to us...
           return;
         }
-
         // send a notification message...
         $rootScope.$broadcast('remoteDraw', message);
 
@@ -148,7 +147,7 @@ app.factory('JScribbleService', function($rootScope) {
                                             start: start,
                                             end: start,
                                             color: color,
-                                            storke: stroke }));
+                                            stroke: stroke }));
       }
     
   	}
