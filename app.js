@@ -62,8 +62,9 @@ io.sockets.on('connection', function (socket) { // handler for incoming connecti
       messages.push(msg);
       var now = new Date();
       messages = _.reject(messages, function(m) {
-        return (now - m) > (30 * 1000); // 30 seconds
+        return (now - m.time) > (10 * 60 * 1000); // 10 minutes
       });
+
     });
     
     socket.on('draw', function (data) {

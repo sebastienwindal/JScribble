@@ -1,5 +1,14 @@
 function DrawCtrl($scope, JScribbleService) {
 
+	$scope.onDraw = function(start, end, color, stroke) {
+		
+		JScribbleService.addDrawSegment(start, end, color, stroke);
+	}
+
+	$scope.onStartDraw = function(start, color, stroke) {
+		
+		JScribbleService.sendStartDraw(start, color, stroke);
+	}
 }
 
 app.directive('drawingBoard', function() {
@@ -8,41 +17,52 @@ app.directive('drawingBoard', function() {
 		template: '<canvas></canvas>',
 		stage: null,
 		replace: true,
+		scope: {
+			strokeSize: "@strokeSize",
+			penColor: "@penColor",
+			onDraw: "&onDraw"
+		},
 		
 		link: function(scope, element, attrs) {
 
 			scope.handleMouseDown = function() {
 
-	    		oldPt = new createjs.Point(scope.stage.mouseX, scope.stage.mouseY);
-	    		oldMidPt = oldPt;
+	    		scope.oldPt = new createjs.Point(scope.stage.mouseX, scope.stage.mouseY);
+	    		scope.oldMidPt = scope.oldPt;
 	    		scope.stage.addEventListener("stagemousemove" , scope.handleMouseMove);
 
-	    		//socket.emit('draw', $.toJSON({  action: 'start', 
-	            //                        user: clientName,
-	            //                        start: oldMidPt,
-	            //                        end:oldMidPt,
-	            //                        color:penColor,
-	            //                        stroke: stroke }));
+				scope.onDraw({	start: scope.oldMidPt, 
+								end: scope.oldMidPt, 
+								color: scope.penColor, 
+								stroke: scope.strokeSize } );
+
 			};
 
 			scope.handleMouseMove = function() {
 
-				var midPt = new createjs.Point(oldPt.x + scope.stage.mouseX>>1, oldPt.y+scope.stage.mouseY>>1);
+				scope.midPt = new createjs.Point(scope.oldPt.x + scope.stage.mouseX>>1, scope.oldPt.y+scope.stage.mouseY>>1);
+				if (!scope.strokeSize)
+					scope.strokeSize = 5;
+				if (!scope.penColor)
+					scope.penColor = "#000";
 
-	    		drawingCanvas.graphics.clear()	.setStrokeStyle(5 /* stroke */, 'round', 'round')
-	    										.beginStroke('#000000' /*penColor*/)
-	    										.moveTo(midPt.x, midPt.y)
-	    										.curveTo(oldPt.x, oldPt.y, oldMidPt.x, oldMidPt.y);
+	    		drawingCanvas.graphics.clear()	.setStrokeStyle(scope.strokeSize, 'round', 'round')
+	    										.beginStroke(scope.penColor)
+	    										.moveTo(scope.midPt.x, scope.midPt.y)
+	    										.curveTo(scope.oldPt.x, scope.oldPt.y, scope.oldMidPt.x, scope.oldMidPt.y);
 
-	    		oldPt.x = scope.stage.mouseX;
-	    		oldPt.y = scope.stage.mouseY;
+	    		scope.oldPt.x = scope.stage.mouseX;
+	    		scope.oldPt.y = scope.stage.mouseY;
 
-	    		oldMidPt.x = midPt.x;
-	    		oldMidPt.y = midPt.y;
+	    		scope.oldMidPt.x = scope.midPt.x;
+	    		scope.oldMidPt.y = scope.midPt.y;
 
 	    		scope.stage.update();
 
-	    		//socket.emit('draw', $.toJSON({action: 'draw', user: clientName, start: oldMidPt, end:midPt, color:penColor, stroke: stroke }));
+				scope.onDraw({	start: scope.oldMidPt, 
+								end: scope.midPt,
+								color: scope.penColor, 
+								stroke: scope.strokeSize });
 			};
 
 			scope.handleMouseUp = function() {

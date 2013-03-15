@@ -116,6 +116,25 @@ app.factory('JScribbleService', function($rootScope) {
                 }
             	break;
             }
+        },
+
+        addDrawSegment: function(start, end, color, stroke) {
+          this.socket.emit('draw', $.toJSON({ action: 'draw', 
+                                              userId: this.userId, 
+                                              start: start, 
+                                              end: end, 
+                                              color: color,
+                                              stroke: stroke }));
+        },
+
+        sendStartDraw: function(start, color, stroke) {
+          this.socket.emit("");
+          this.socket.emit('draw', $.toJSON({ action: 'start',
+                                              userId: this.userId,
+                                              start: start,
+                                              end: start,
+                                              color: color,
+                                              storke: stroke }));
         }
     
   	}
