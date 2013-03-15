@@ -74,6 +74,16 @@ app.directive('drawingBoard', function() {
         		scope.stage.canvas.height = element.height();       
     		}
 
+    		scope.$on('remoteDraw', function(evt, msg) {
+    			//scope.canvas.graphics.clear().setStrokeStyle(stroke, 'round', 'round')
+    			//		.beginStroke(scope.penColor)
+    			//		.moveTo(scope.end.x, scope.end.y)
+    					//.curveTo(scope.end.x, scope.end.y, oldMidPts[user].x, oldMidPts[user].y)
+    						;
+    			//scope.stage.update();
+    		});
+
+
 			var canvas = angular.element(element)[0];
 
 			$(window).resize(function() {

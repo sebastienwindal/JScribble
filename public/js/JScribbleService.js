@@ -65,6 +65,7 @@ app.factory('JScribbleService', function($rootScope) {
 	  		  this.socket = io.connect('http://' + host);
           this.socket.userData = this;
           this.socket.on('chat', this.chatCallback);
+          this.socket.on('draw', this.drawCallback);
           this.socket.emit('join', $.toJSON({ userName: this.userName, userId: this.userId, avatar: this.avatar }));
         }
         this.userName = userName;
@@ -99,43 +100,56 @@ app.factory('JScribbleService', function($rootScope) {
         this.avatar = av;
       },
 
-	    chatCallback: function (msg, d) {
-        	var message = $.evalJSON(msg);
+	    chatCallback: function (msg) {
+      	var message = $.evalJSON(msg);
 
-        	var action = message.action;
-        	switch (action) {
-            	case 'message':
-                	this.userData.messages.push(message);
-                	$rootScope.$apply();
-            	break;
-            
-            	case 'control':
-                if(message.messages && message.messages.length > 0) {
-                  this.userData.messages = message.messages;
-                  $rootScope.$apply();
-                }
-            	break;
-            }
-        },
+      	var action = message.action;
+      	switch (action) {
+          	case 'message':
+              	this.userData.messages.push(message);
+              	$rootScope.$apply();
+          	break;
+          
+          	case 'control':
+              if(message.messages && message.messages.length > 0) {
+                this.userData.messages = message.messages;
+                $rootScope.$apply();
+              }
+          	break;
+          }
+      },
 
-        addDrawSegment: function(start, end, color, stroke) {
-          this.socket.emit('draw', $.toJSON({ action: 'draw', 
-                                              userId: this.userId, 
-                                              start: start, 
-                                              end: end, 
-                                              color: color,
-                                              stroke: stroke }));
-        },
+      drawCallback: function(msg) {
+        var message = $.evalJSON(msg);
 
-        sendStartDraw: function(start, color, stroke) {
-          this.socket.emit("");
-          this.socket.emit('draw', $.toJSON({ action: 'start',
-                                              userId: this.userId,
-                                              start: start,
-                                              end: start,
-                                              color: color,
-                                              storke: stroke }));
+        if (message.userId == this.userId) {
+          // ignore our own messages being retransmitted back to us...
+          return;
         }
+
+        // send a notification message...
+        $rootScope.$broadcast('remoteDraw', message);
+
+      },
+
+      addDrawSegment: function(start, end, color, stroke) {
+        this.socket.emit('draw', $.toJSON({ action: 'draw', 
+                                            userId: this.userId, 
+                                            start: start, 
+                                            end: end, 
+                                            color: color,
+                                            stroke: stroke }));
+      },
+
+      sendStartDraw: function(start, color, stroke) {
+        this.socket.emit("");
+        this.socket.emit('draw', $.toJSON({ action: 'start',
+                                            userId: this.userId,
+                                            start: start,
+                                            end: start,
+                                            color: color,
+                                            storke: stroke }));
+      }
     
   	}
 });
