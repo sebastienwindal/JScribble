@@ -7,49 +7,49 @@ app.factory('JScribbleService', function($rootScope) {
   		userId: null,
       avatar: null,
       possibleAvatars: [
-        "8ball.tif.jpg",
-        "Baseball.tif.jpg",
-        "Basketball.tif.jpg",
-        "Bowling.tif.jpg",
-        "Cactus.tif.jpg",
-        "Chalk.tif.jpg",
-        "Dahlia.tif.jpg",
-        "Dandelion.tif.jpg",
-        "Drum.tif.jpg",
-        "Eagle.tif.jpg",
-        "Earth.tif.jpg",
-        "Flower.tif.jpg",
-        "Football.tif.jpg",
-        "Fortune Cookie.tif.jpg",
-        "Gingerbread Man.tif.jpg",
-        "Golf.tif.jpg",
-        "Guitar.tif.jpg",
-        "Hockey.tif.jpg",
-        "Leaf.tif.jpg",
-        "Lightning.tif.jpg",
-        "Lotus.tif.jpg",
-        "Medal.tif.jpg",
-        "Nest.tif.jpg",
-        "Owl.tif.jpg",
-        "Parrot.tif.jpg",
-        "Penguin.tif.jpg",
-        "Piano.tif.jpg",
-        "Poppy.tif.jpg",
-        "Red Rose.tif.jpg",
-        "Sandollar.tif.jpg",
-        "Smack.tif.jpg",
-        "Snowflake.tif.jpg",
-        "Soccer.tif.jpg",
-        "Sunflower.tif.jpg",
-        "Target.tif.jpg",
-        "Tennis.tif.jpg",
-        "Turntable.tif.jpg",
-        "Violin.tif.jpg",
-        "Whiterose.tif.jpg",
-        "Yellow Daisy.tif.jpg",
-        "Ying Yang.tif.jpg",
-        "Zebra.tif.jpg",
-        "Zen.tif.jpg",
+        { image: "8ball.tif.jpg", isSelected: false },
+        { image: "Baseball.tif.jpg", isSelected: false },
+        { image: "Basketball.tif.jpg", isSelected: false },
+        { image: "Bowling.tif.jpg", isSelected: false },
+        { image: "Cactus.tif.jpg", isSelected: false },
+        { image: "Chalk.tif.jpg", isSelected: false },
+        { image: "Dahlia.tif.jpg", isSelected: false },
+        { image: "Dandelion.tif.jpg", isSelected: false },
+        { image: "Drum.tif.jpg", isSelected: false },
+        { image: "Eagle.tif.jpg", isSelected: false },
+        { image: "Earth.tif.jpg", isSelected: false },
+        { image: "Flower.tif.jpg", isSelected: false },
+        { image: "Football.tif.jpg", isSelected: false },
+        { image: "Fortune Cookie.tif.jpg", isSelected: false },
+        { image: "Gingerbread Man.tif.jpg", isSelected: false },
+        { image: "Golf.tif.jpg", isSelected: false },
+        { image: "Guitar.tif.jpg", isSelected: false },
+        { image: "Hockey.tif.jpg", isSelected: false },
+        { image: "Leaf.tif.jpg", isSelected: false },
+        { image: "Lightning.tif.jpg", isSelected: false },
+        { image: "Lotus.tif.jpg", isSelected: false },
+        { image: "Medal.tif.jpg", isSelected: false },
+        { image: "Nest.tif.jpg", isSelected: false },
+        { image: "Owl.tif.jpg", isSelected: false },
+        { image: "Parrot.tif.jpg", isSelected: false },
+        { image: "Penguin.tif.jpg", isSelected: false },
+        { image: "Piano.tif.jpg", isSelected: false },
+        { image: "Poppy.tif.jpg", isSelected: false },
+        { image: "Red Rose.tif.jpg", isSelected: false },
+        { image: "Sandollar.tif.jpg", isSelected: false },
+        { image: "Smack.tif.jpg", isSelected: false },
+        { image: "Snowflake.tif.jpg", isSelected: false },
+        { image: "Soccer.tif.jpg", isSelected: false },
+        { image: "Sunflower.tif.jpg", isSelected: false },
+        { image: "Target.tif.jpg", isSelected: false },
+        { image: "Tennis.tif.jpg", isSelected: false },
+        { image: "Turntable.tif.jpg", isSelected: false },
+        { image: "Violin.tif.jpg", isSelected: false },
+        { image: "Whiterose.tif.jpg", isSelected: false },
+        { image: "Yellow Daisy.tif.jpg", isSelected: false },
+        { image: "Ying Yang.tif.jpg", isSelected: false },
+        { image: "Zebra.tif.jpg", isSelected: false },
+        { image: "Zen.tif.jpg", isSelected: false },
       ],
       possibleColors: [ {color:'black', isSelected: true},
                         {color:'#fce94f', isSelected: false},
@@ -83,6 +83,11 @@ app.factory('JScribbleService', function($rootScope) {
 
 	  	init: function(host, userName, avatar) {
 
+        this.userName = userName;
+        this.avatar = avatar;
+        this.userId = Math.floor((1 + Math.random()) * 0x10000).toString(16) + 
+                          Math.floor((1 + Math.random()) * 0x10000).toString(16);
+                          
         if (this.socket) {
           if (this.socket.socket.connected === false &&
               this.socket.socket.connecting === false) {
@@ -94,12 +99,9 @@ app.factory('JScribbleService', function($rootScope) {
           this.socket.userData = this;
           this.socket.on('chat', this.chatCallback);
           this.socket.on('draw', this.drawCallback);
-          this.socket.emit('join', $.toJSON({ userName: this.userName, userId: this.userId, avatar: this.avatar }));
+
+          this.socket.emit('join', $.toJSON({ userName: this.userName, userId: this.userId, avatar: this.avatar.image }));
         }
-        this.userName = userName;
-        this.avatar = avatar;
-        this.userId = Math.floor((1 + Math.random()) * 0x10000).toString(16) + 
-                          Math.floor((1 + Math.random()) * 0x10000).toString(16);
           
 	  	},
 
@@ -119,7 +121,7 @@ app.factory('JScribbleService', function($rootScope) {
                               userId: this.userId,
                               msg: message, 
                               userName: this.userName,
-                              avatar: this.avatar
+                              avatar: this.avatar.image
                               });
     		this.socket.emit('chat', msg);
 	    },

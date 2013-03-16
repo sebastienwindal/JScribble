@@ -32,10 +32,10 @@ body {
 }
 #avatarList li {
   display: inline-block;
-  padding: 2px;
+  padding: 3px;
 }
 #avatarList li.selected {
-  background-color: blue;
+  background-color: #30f;
 }
 #avatarList img {
   width: 48px;
@@ -54,14 +54,15 @@ body {
         <h4>Please identify yourself!</h4>
     </div>
     <div class="modal-body">
-      <img id="formAvatar" ng-src="/img/{{userAvatar}}" />
+      <img id="formAvatar" ng-src="/img/{{userAvatar.image}}" />
     	<input class="input-xlarge"  placeholder="your name here" ng-model="userName"/>
     	<button class="btn btn-primary" ng-click="closeNameModal()">Join!</button>
 
       <ul id="avatarList" ng-cloak>
         <li ng-repeat="avatar in scribble.possibleAvatars"
-            ng-class="{userAvatar:'selected'}[avatar]">
-          <img ng-src="/img/{{avatar}}" 
+            ng-controller="AvatarController"
+            ng-class="{true:'selected'}[avatar.isSelected]">
+          <img ng-src="/img/{{avatar.image}}" 
               ng-click="setAvatar(avatar)" />
         </li>
       </ul>
