@@ -28,7 +28,7 @@ function MainCtrl($scope, JScribbleService, $cookieStore) {
 	}
 
 	$scope.join = function() {
-		$cookieStore.put('JScribble', { userName: $scope.userName,
+		$scope.cookieStore.put('JScribble', { userName: $scope.userName,
 										avatar: $scope.userAvatar.image });
 		JScribbleService.init(window.location.host, $scope.userName, $scope.userAvatar);
 		
@@ -48,7 +48,7 @@ function MainCtrl($scope, JScribbleService, $cookieStore) {
 	};
 
 	$scope.logout = function() {
-		$cookieStore.remove('JScribble');
+		$scope.cookieStore.remove('JScribble');
 		$scope.shouldShowNameModal = true;
 		
 		JScribbleService.logout();
