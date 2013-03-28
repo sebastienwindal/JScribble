@@ -15,7 +15,7 @@ function DrawCtrl($scope, JScribbleService) {
 	$scope.changeColor = function(color) {
 		
 		$scope.selectedColor = color;
-		
+
 		for (c in $scope.scribble.possibleColors) {
 			if ($scope.scribble.possibleColors[c] != $scope.selectedColor) {
 				$scope.scribble.possibleColors[c].isSelected = false;
@@ -72,7 +72,7 @@ app.directive('drawingBoard', function() {
 			};
 
 			scope.handleMouseMove = function() {
-
+				
 				if (!scope.strokeSize)
 					scope.strokeSize = 5;
 				if (!scope.penColor)
