@@ -8,9 +8,10 @@ I am using cookies), start chating and drawing.
 
 This was mostly done as an experiment/learning experience mostly to cut my teeth on angular.js, socket.io and node.js.
 
-An instance of JScribble is curently running on heroku at [murmuring-scrubland-9020.herokuapp.com](http://murmuring-scrubland-9020.herokuapp.com). Keep in mind I did not implemented
-any kind of session/chat room, everybody can see everything you do in JScribble, one worldwide completly public
-collaboration board.
+An instance of JScribble is curently running on heroku at 
+[murmuring-scrubland-9020.herokuapp.com](http://murmuring-scrubland-9020.herokuapp.com).
+Keep in mind I have not implemented any kind of session/chat room, everybody can see everything
+you do in JScribble, one worldwide completly public collaboration board.
 
 Tested on Chrome and Safari, probably won't work on IE, YMMV on Firefox. Also I have not put any effort at all in supporting
 touch for drawgin and in making the layour work on mobile.
