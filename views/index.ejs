@@ -1,53 +1,3 @@
-    <!-- Navbar
-    ================================================== -->
-
-<style type="text/css" media="screen">
-
-#mainContainer {
-	
-}
-#drawContainer {
-	height: inherit;
-}
-#chatContainer {
-	height: inherit;
-}
-#chatContainer, #drawContainer {
-	heigt: inherit;
-	padding-top: 41px;
-	padding-bottom: 41px;
-}
-body {
-	height: 100%;
-	width: 100%;
-    position: absolute;
-}
-
-.container-fluid,
-.row-fluid { height: inherit; }
-
-#avatarList {
-  height: 280px;
-  margin: 20px 10px 5px 10px;
-}
-#avatarList li {
-  display: inline-block;
-  padding: 3px;
-}
-#avatarList li.selected {
-  background-color: #30f;
-}
-#avatarList img {
-  width: 48px;
-  height: 48px;
-}
-#formAvatar {
-  width:32px;
-  height: 32px;
-  margin: 0px 15px 0px 30px;
-}
-
-</style>
 
 <div class="modal" ng-class="{true:'show', false:'hide'}[shouldShowNameModal]">
     <div class="modal-header">
@@ -71,13 +21,13 @@ body {
 
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="navbar-inner">
-    <a class="brand" href="#">JScribble</a>
+    <a class="brand" href="#" id="scribbleLeftTitle">JScribble</a>
     <ul class="nav">
     	<li class="divider-vertical"></li>
         <li class=""><a href="#">Interactive collaboration board experiment</a></li>
     </ul>
     <ul class="nav pull-right">
-    	<li class="btn btn-primary" ng-hide="shouldShowNameModal" ng-click="logout()">logout</li>
+    	<li class="btn btn-primary" ng-hide="shouldShowNameModal" ng-click="logout()" id="logoutButton">logout</li>
     </ul>
   </div>
 </div>
