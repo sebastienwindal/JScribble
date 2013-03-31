@@ -103,7 +103,7 @@ app.factory('JScribbleService', function($rootScope) {
           this.socket.emit('join', $.toJSON({ userName: this.userName, userId: this.userId, avatar: this.avatar.image }));
         }
           
-	  	},
+	  	}, 
 
       logout: function() {
         this.socket.emit('close', $.toJSON({ userName: this.userName, userId: this.userId}));
