@@ -1,9 +1,13 @@
 
 var _ = require('underscore');
-
+var socket = null;
+var io;
 module.exports = {
-    start: function(port) {
-        var io = require('socket.io').listen(port);
+
+    start: function(port, timeout) {
+        io = require('socket.io').listen(port);
+            io.set('close timeout', timeout);
+            io.set('client store expiration', timeout);
 
         var messages = [];
 
@@ -15,8 +19,8 @@ module.exports = {
           io.set("polling duration", 10);
         });
 
-        io.sockets.on('connection', function (socket) { // handler for incoming connections
-            
+        io.sockets.on('connection', function (sock) { // handler for incoming connections
+            socket = sock;
             socket.on('chat', function (data) {
               var msg = JSON.parse(data);
               msg.time = new Date();
@@ -62,11 +66,19 @@ module.exports = {
             });
 
             socket.on('close', function(data) {
-              var msg= JSON.parse(data);
+              var msg = JSON.parse(data);
               socket.disconnect();
             });
-          });
-            }
-        };
+        });
+    },
+    stop: function() {
+        console.log("stoping server");
+        if (socket) {
+            socket.disconnect();
+            io.server.close();
+        }
+        socket = null;
+    }
+};
 
 

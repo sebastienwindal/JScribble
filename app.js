@@ -33,5 +33,5 @@ app.listen(port, function() {
 app.get('/', routes.index);
 
 var server = require('./JScribbleServer');
-server.start(app);
+server.start(app, 5);
 
