@@ -1,20 +1,13 @@
 {
-  "name": "jscribble",
-  "version": "0.0.1",
-  "private": false,
-  "dependencies": {
-    "express": "~2.5.8",
-    "ejs": "~0.7.1",
-    "socket.io": "~0.9.6",
-    "socket.io-client": "~0.9.6",
-    "expresso": "~0.9.2"
-  },
-  "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-jshint": "~0.1.1",
-    "grunt-contrib-watch": "~0.3.1",
-    "grunt-plato": "~0.1.5",
-    "grunt-contrib-uglify": "~0.2.0"
+    "name": "jscribble",
+    "version": "0.0.1",
+    "private": false,
+    "dependencies": {
+      "express": "~2.5.8",
+      "ejs": "~0.7.1",
+      "socket.io": "~0.9.6",
+      "socket.io-client": "~0.9.6",
+      "expresso":"~0.9.2"
   },
   "engines": {
     "node": "0.8.x"
