@@ -1,10 +1,15 @@
 
 var assert = require('assert');
 var express = require('express');
+var server = require('../JScribbleServer');
+
+var port = 5000;
+
+server.start(port, 0.2);
 
 exports.testAsync = function(beforeExit) {
     var io = require('socket.io-client');
-    var socket = io.connect('http://localhost:5000');
+    var socket = io.connect('http://localhost:' + port);
 
     assert(socket !== null);
     assert(socket !== undefined);    
@@ -19,6 +24,7 @@ exports.testAsync = function(beforeExit) {
 
         // disconnect if no answer in 1/2 sec.
         timeout = setTimeout(function() {
+            server.stop();
             socket.disconnect();
         }, 1000);
     });
@@ -35,6 +41,7 @@ exports.testAsync = function(beforeExit) {
         assert(msg.avatar == 'someImage.png');
         assert(msg.userName == 'testusername');
 
+        server.stop();
         socket.disconnect();
     });
 
